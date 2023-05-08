@@ -152,14 +152,15 @@ mod tests{
         assert(res_symbol == SYMBOL, 'Symbol does not match.');
 
         // Test decimals
-        // Your code here
+        let res_decimals = ERC20::get_decimals();
+        assert(res_decimals == decimals, 'Decimals does not match.');
 
         // Test total_supply
-        // Your code here
+        let res_total_supply = ERC20::get_total_supply();
+        assert(res_total_supply == initial_supply, 'Total supply does not match.');
 
         // Test the balance of the account variable
-
-        // Your code here
-
+        let res_balance = ERC20::balance_of(account);
+        assert(res_balance == initial_supply, 'Balance does not match.');
     }
 }
