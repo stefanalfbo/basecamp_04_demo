@@ -50,5 +50,20 @@ fn test_transfer_to_zero() {
 #[test]
 #[available_gas(2000000)]
 fn test_transfer_from() {
-    // Your code here
+    let (contract_owner, supply) = setup();
+
+    let sender: ContractAddress = contract_address_const::<3>();
+    let recipient: ContractAddress = contract_address_const::<2>();
+    let amount: u256 = u256_from_felt252(42);
+    
+    // Approve sender to spend amount from contract owner
+    ERC20::approve(sender, amount);
+
+    // Switch to sender as caller
+    set_caller_address(sender);
+    
+    ERC20::transfer_from(contract_owner, recipient, amount);
+
+    assert(ERC20::balance_of(recipient) == amount, 'Balance should eq amount');
+    assert(ERC20::balance_of(contract_owner) == supply - amount, 'Should eq supply - amount');
 }
